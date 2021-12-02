@@ -12,9 +12,11 @@ const App = () => {
   const [archivedCall, setArchivedCall] = useState();
   const [callDetail, setCallDetail] = useState();
 
-  const fetchAirCallData = useCallback(async (path = 'activities') => {
+  const fetchAirCallData = useCallback(async () => {
     try {
-      const response = await fetch(`https://aircall-job.herokuapp.com/${path}`);
+      const response = await fetch(
+        `https://aircall-job.herokuapp.com/activities`
+      );
       const data = await response.json();
       setAllCalls(data);
     } catch (error) {
@@ -36,6 +38,7 @@ const App = () => {
     const archivedCall = allCalls.filter((call) => call.is_archived);
     setArchivedCall(archivedCall);
     setDisplayType('archive');
+    fetchAirCallData();
   };
 
   // Display details

@@ -21,34 +21,28 @@ const ActivityDetail = (props) => {
   ];
   const newDate = new Date(props.created_at);
 
-  // Set the call to archive
-  const archivedCallHandler = async () => {
+  const fetchData = async (archived) => {
     try {
       await fetch(`https://aircall-job.herokuapp.com/activities/${props.id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ is_archived: true }),
+        body: JSON.stringify({ is_archived: archived }),
       });
 
-      setIsArchived(true);
+      setIsArchived(archived);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Set the call to not archive
-  const notArchivedCallHandler = async () => {
-    try {
-      await fetch(`https://aircall-job.herokuapp.com/activities/${props.id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ is_archived: false }),
-      });
+  // Set the call to archive
+  const archivedCallHandler = () => {
+    fetchData(true);
+  };
 
-      setIsArchived(false);
-    } catch (err) {
-      console.log(err);
-    }
+  // Set the call to not archive
+  const notArchivedCallHandler = () => {
+    fetchData(false);
   };
 
   return (
